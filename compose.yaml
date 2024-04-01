@@ -15,11 +15,16 @@ services:
     command: go run ./src/main.go
     ports:
       - '8080:80'
+    environment:
+      - DB_CONN_STRING=postgres://postgres:anginex@db:5432/anginex?sslmode=disable
     develop:
       watch:
         - action: sync+restart
           path: ./
           target: /app
+
+  test-api:
+    image: buddylonglegs/expressjs-starters:latest
 
   db:
     image: timescale/timescaledb:latest-pg15
@@ -39,16 +44,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-# The commented out section below is an example of how to define a PostgreSQL
-# database that your application can use. `depends_on` tells Docker Compose to
-# start the database before your application. The `db-data` volume persists the
-# database data between container restarts. The `db-password` secret is used
-# to set the database password. You must create `db/password.txt` and add
-# a password of your choosing to it before running `docker compose up`.
 
 volumes:
   db-data:
-# secrets:
-#   db-password:
-#     file: db/password.txt
-
