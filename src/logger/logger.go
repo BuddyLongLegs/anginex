@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -29,8 +30,8 @@ func (d *DBLogger) Close() {
 	d.dbPool.Close()
 }
 
-func (d *DBLogger) CreateTables() {
-	_, err := d.dbPool.Exec(d.ctx, CREATE_TABLE)
+func (d *DBLogger) InitDatabase() {
+	_, err := d.dbPool.Exec(d.ctx, INIT_DB)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to create the `log_data` hypertable: %v\n", err)
 		os.Exit(1)
@@ -43,4 +44,13 @@ func (d *DBLogger) AddLog(time string, host string, path string, method string, 
 		fmt.Fprintf(os.Stderr, "Unable to insert log data: %v\n", err)
 		os.Exit(1)
 	}
+}
+
+func (d *DBLogger) ExecQuery(query string, args ...interface{}) (pgx.Rows, error) {
+	rows, err := d.dbPool.Query(d.ctx, query, args...)
+	if err != nil {
+		return nil, err
+	}
+
+	return rows, nil
 }

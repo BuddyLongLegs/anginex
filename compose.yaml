@@ -14,6 +14,7 @@ services:
       dockerfile: Dockerfile
     command: go run ./src/main.go
     ports:
+      - '4000:4000'
       - '8080:80'
     environment:
       - DB_CONN_STRING=postgres://postgres:anginex@db:5432/anginex?sslmode=disable
@@ -22,8 +23,7 @@ services:
         - action: sync+restart
           path: ./
           target: /app
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+
   db:
     image: timescale/timescaledb:latest-pg15
     command: postgres -c shared_preload_libraries=timescaledb

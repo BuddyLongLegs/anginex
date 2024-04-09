@@ -1,6 +1,6 @@
 package logger
 
-const CREATE_TABLE = `
+const INIT_DB = `
 CREATE TABLE IF NOT EXISTS log_data (
 	time TIMESTAMPTZ NOT NULL,
 	host TEXT NOT NULL,

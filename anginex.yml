@@ -1,0 +1,7 @@
+routes:
+  /test:
+    proxy_pass: http://host.docker.internal:8000/api
+    trim_prefix: /test
+  /abc:
+    proxy_pass: http://host.docker.internal:8000/api
+    trim_prefix: /abc

@@ -16,6 +16,7 @@ func Run(config config.Config, dbLogger *logger.DBLogger) error {
 	proxyHandlers := make(map[string]ProxyHandler)
 	endpoints := make([]string, 0, len(config.Routes))
 
+	// Generating the proxy handlers for each route
 	for endpoint, route := range config.Routes {
 		proxyHandlers[endpoint] = CreateRedirectProxyHandler(route, *dbLogger)
 		endpoints = append(endpoints, endpoint)
