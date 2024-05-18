@@ -17,12 +17,14 @@ services:
       - '4000:4000'
       - '8080:80'
     environment:
-      - DB_CONN_STRING=postgres://postgres:anginex@db:5432/anginex?sslmode=disable
+      - DB_CONN_STRING=postgres://postgres:anginex@db:5432/postgres?sslmode=disable
     develop:
       watch:
         - action: sync+restart
           path: ./
           target: /app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   db:
     image: timescale/timescaledb:latest-pg15
@@ -30,7 +32,6 @@ services:
     user: "postgres"
     environment:
       - PGDATA=/var/lib/postgresql/data/timescaledb
-      - POSTGRES_DB=anginex
       - POSTGRES_USER=postgres
       - PGUSER=postgres
       - POSTGRES_PASSWORD=anginex

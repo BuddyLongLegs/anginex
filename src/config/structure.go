@@ -18,10 +18,19 @@ routes:
 			- key
 		trim_prefix: /test
 		trim_suffix: .html
+
+analytics:
+	username: admin
+	password: admin
+	enabled: true
+	port: 4000
+	extra_queries:
+		key: value
 */
 
 type Config struct {
-	Routes Route `mapstructure:"routes"`
+	Routes    Route     `mapstructure:"routes"`
+	Analytics Analytics `mapstructure:"analytics"`
 }
 
 type Route map[string]RouteConfig
@@ -36,12 +45,13 @@ type RouteConfig struct {
 	TrimSuffix      string   `mapstructure:"trim_suffix"`
 }
 
-type Header struct {
-	Key   string `mapstructure:"key"`
-	Value string `mapstructure:"value"`
-}
+type Header map[string]string
 
-type Cookie struct {
-	Key   string `mapstructure:"key"`
-	Value string `mapstructure:"value"`
+type Cookie map[string]string
+type Analytics struct {
+	Username             string `mapstructure:"username"`
+	Password             string `mapstructure:"password"`
+	Enabled              bool   `mapstructure:"enabled"`
+	Port                 int    `mapstructure:"port"`
+	DisableSystemMetrics bool   `mapstructure:"disable_system_metrics"`
 }

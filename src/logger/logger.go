@@ -54,3 +54,15 @@ func (d *DBLogger) ExecQuery(query string, args ...interface{}) (pgx.Rows, error
 
 	return rows, nil
 }
+
+func (d *DBLogger) AddSystemMetrics(time string, cpu float64, memory float64) {
+	if cpu == 0 || memory == 0 {
+		return
+	}
+
+	_, err := d.dbPool.Exec(d.ctx, INSERT_SYSTEM_METRICS, time, cpu, memory)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to insert system metrics: %v\n", err)
+		os.Exit(1)
+	}
+}
