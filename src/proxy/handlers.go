@@ -51,8 +51,6 @@ func CreateRedirectProxyHandler(route config.RouteConfig, dbLogger logger.DBLogg
 	return func(w http.ResponseWriter, r *http.Request) {
 		startTime := time.Now().UnixNano()
 
-    fmt.Println("Proxying request to", r.Host, r.URL.Scheme, r.URL.Path)
-
 		// Set the host and scheme of the request
 		r.URL.Host = url.Host
 		r.URL.Scheme = url.Scheme

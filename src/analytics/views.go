@@ -37,7 +37,6 @@ func QueryHandler(dbPool *ReadDB) func(w http.ResponseWriter, r *http.Request) {
 
 		for rows.Next() {
 			cols := rows.FieldDescriptions()
-			fmt.Println(cols)
 			row := make(map[string]interface{})
 			values, _ := rows.Values()
 			for i, col := range cols {

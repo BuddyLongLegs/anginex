@@ -33,9 +33,10 @@ type Config struct {
 	Analytics Analytics `mapstructure:"analytics"`
 }
 
-type Route map[string]RouteConfig
+type Route []RouteConfig
 
 type RouteConfig struct {
+	Location        string   `mapstructure:"location"`
 	ProxyPass       string   `mapstructure:"proxy_pass"`
 	ProxySetHeader  []Header `mapstructure:"proxy_set_header"`
 	ProxyHideHeader []string `mapstructure:"proxy_hide_header"`
